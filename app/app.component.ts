@@ -1,14 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Toshi } from './toshi';
-
-const TOSHIS: Toshi[] = [
-  { rating: 90, name: 'Toshi in Pajamas' },
-  { rating: 97, name: 'Toshi in a Tux' },
-  { rating: 95, name: 'Toshi in Chaos' },
-  { rating: 100, name: 'Toshmagosh' },
-  { rating: 92, name: 'Toshi in Glasses' }
-];
+import { ToshiService } from './toshi.service';
 
 @Component({
   selector: 'my-app',
@@ -72,13 +65,24 @@ const TOSHIS: Toshi[] = [
       margin-right: .8em;
       border-radius: 4px 0 0 4px;
     }
-  `]
+  `],
+  providers: [ToshiService]
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'All the Toshis!';
-  toshis = TOSHIS;
+  toshis: Toshi[];
   selectedToshi: Toshi;
+
+  constructor(private toshiService: ToshiService) {}
+
+  getToshis(): void {
+    this.toshiService.getToshis().then(toshis => this.toshis = toshis);
+  }
+
+  ngOnInit(): void {
+    this.getToshis();
+  }
 
   onSelect(toshi: Toshi): void {
     this.selectedToshi = toshi;
