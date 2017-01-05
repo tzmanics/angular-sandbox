@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 
-export class Toshi {
-  rating: number;
-  name: string;
-}
+import { Toshi } from './toshi';
 
 const TOSHIS: Toshi[] = [
   { rating: 90, name: 'Toshi in Pajamas' },
@@ -25,14 +22,7 @@ const TOSHIS: Toshi[] = [
         <span class="badge">{{toshi.rating}}</span> {{toshi.name}}
       </li>
     </ul>
-    <div *ngIf="selectedToshi">
-      <h2>Look at {{selectedToshi.name}}</h2>
-      <div><label>rating: </label>{{selectedToshi.id}}</div>
-      <div>
-        <label>name: </label>
-        <input [(ngModel)]="selectedToshi.name" placeholder="name"/>
-      </div>
-    </div>
+    <my-toshi-detail [toshi]="selectedToshi"></my-toshi-detail>
   `,
   styles: [`
     .selected {
